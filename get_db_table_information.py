@@ -72,7 +72,8 @@ class GetDbTableInformationClass:
                                                           bitwise_public.DATA_LENGTH_SHIFT_QUERY.format("""select TABLE_NAME
                                                           from information_schema.tables where table_schema = '{0}'
                                                           limit {1},1""".format(self.db_name, table_idx),
-                                                                                                        shift_idx))).text)
+                                                                                                        shift_idx)))
+                                 .text)
                 tables_length_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
 
             self.tables_name_length.append(bitwise_public.parsing_bin_list_to_decimal(tables_length_bin_list))
@@ -92,7 +93,8 @@ class GetDbTableInformationClass:
                                                               """.format(self.db_name),
                                                                                                          table_name_idx,
                                                                                                          shift_idx,
-                                                                                                         table_idx))).text)
+                                                                                                         table_idx)))
+                                     .text)
                     table_name_char_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
 
                 table_char_list.append(bitwise_public.parsing_bin_list_to_char(table_name_char_bin_list))
@@ -105,3 +107,16 @@ class GetDbTableInformationClass:
 
     def tables_name_getter(self):
         return self.tables_name
+
+
+if __name__ == '__main__':
+    test_class = GetDbTableInformationClass()
+
+    test_class.get_db_name_length()
+    test_class.get_db_name()
+    test_class.get_tables_number()
+    test_class.get_tables_length()
+    test_class.get_tables_name()
+
+    print(test_class.db_name_getter())
+    print(test_class.tables_name_getter())
