@@ -10,5 +10,6 @@ TABLE_NAME = ''
 def parsing_bin_list_to_decimal(bin_list):
     return int(''.join(bin_list), 2)
 
+
 def parsing_bin_list_to_char(bin_list):
     return chr(parsing_bin_list_to_decimal(bin_list))

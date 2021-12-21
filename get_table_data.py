@@ -8,8 +8,12 @@ import bitwise_public
 class GetTableDataClass:
     def __init__(self):
         self.SUCCESS_LENGTH = len(requests.get(bitwise_public.TARGET_URL).text)
+
+        # Number of column
         self.column_number = 0
+        # Column name length
         self.column_name_length = []
+        # Column names
         self.column_name = []
 
     def get_column_number(self):
