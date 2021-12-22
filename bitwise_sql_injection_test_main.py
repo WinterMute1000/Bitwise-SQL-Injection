@@ -1,5 +1,5 @@
 from get_db_table_information import GetDbTableInformationClass
-
-test_table_class = GetDbTableInformationClass()
-test_table_class.get_db_name_length()
-test_table_class.get_db_name()
+import bitwise_public
+test_table_class = GetDbTableInformationClass(bitwise_public.HTTPMethod.POST)
+test_table_class.get_db_name_length(bitwise_public.HTTPMethod.POST)
+test_table_class.get_db_name(bitwise_public.HTTPMethod.POST)

