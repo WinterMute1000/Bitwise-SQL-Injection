@@ -1,5 +1,4 @@
 import requests
-from requests.utils import requote_uri
 import bitwise_public
 
 
@@ -39,11 +38,10 @@ class GetDbTableInformationClass:
             db_name_char_bin_list = []
             for shift_idx in range(7, -1, -1):
                 res_length = bitwise_public.get_data_by_post_method(query, db_name_idx, shift_idx, 0) if method == \
-                                                                                                         bitwise_public.HTTPMethod.POST else bitwise_public.get_data_by_get_method(
-                    query,
-                    db_name_idx,
-                    shift_idx,
-                    0)
+                             bitwise_public.HTTPMethod.POST else bitwise_public.get_data_by_get_method(query,
+                                                                                                       db_name_idx + 1,
+                                                                                                       shift_idx,
+                                                                                                       0)
                 db_name_char_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
             db_name_char_list.append(bitwise_public.parsing_bin_list_to_char(db_name_char_bin_list))
@@ -90,7 +88,7 @@ class GetDbTableInformationClass:
                 for shift_idx in range(7, -1, -1):
                     res_length = bitwise_public.get_data_by_post_method(query, table_name_idx, shift_idx, table_idx) \
                         if method == bitwise_public.HTTPMethod.POST \
-                        else bitwise_public.get_data_by_get_method(query, table_name_idx, shift_idx, table_idx)
+                        else bitwise_public.get_data_by_get_method(query, table_name_idx + 1, shift_idx, table_idx)
 
                     table_name_char_bin_list.append(str(int(res_length == self.SUCCESS_LENGTH)))
 
