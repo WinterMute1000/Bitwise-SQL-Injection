@@ -3,8 +3,11 @@ import bitwise_public
 
 
 class GetDbTableInformationClass:
-    def __init__(self):
-        self.SUCCESS_LENGTH = len(requests.get(bitwise_public.TARGET_URL).text)
+    def __init__(self, method=bitwise_public.HTTPMethod.GET):
+        self.SUCCESS_LENGTH = len(requests.post(url=bitwise_public.TARGET_URL, data=bitwise_public.SUCCESS_DATA_PARAMS)
+                                  .text) \
+                                    if method==bitwise_public.HTTPMethod.POST else len(requests.get(bitwise_public.TARGET_URL)
+                                                                               .text)
         # Using DB name length
         self.db_name_length = 0
         # Using DB name
