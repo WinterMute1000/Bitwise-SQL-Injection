@@ -21,6 +21,9 @@ SUCCESS_DATA_PARAMS = {}
 # Param must in data.
 PARAM_NAME = ''
 
+# Use if you need
+# HEADERS = ''
+# COOKIES = ''
 
 class HTTPMethod(Enum):
     GET = "GET",
