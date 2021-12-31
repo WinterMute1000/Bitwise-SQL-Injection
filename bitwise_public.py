@@ -71,7 +71,7 @@ def get_data_by_get_method(query, data_idx, shift_idx, tuple_idx):
 
 def get_data_by_post_method(query, data_idx, shift_idx, tuple_idx, origin_data_params=DATA_PARAMS):
     data_params = origin_data_params.copy()
-    data_params[PARAM_NAME] = data_params[PARAM_NAME] + DATA_COUNT_SHIFT_QUERY.format(query,
+    data_params[PARAM_NAME] = data_params[PARAM_NAME] + DATA_BIT_SHIFT_QUERY.format(query,
                                                                                              data_idx,
                                                                                              shift_idx,
                                                                                              tuple_idx)
